@@ -1,0 +1,2 @@
+ping -c 1 iziram.fr | grep "time=" | cut -d " " -f 8 | tr -d "time=" -> récuppère le temps de réponse d'un ping
+ping -c 4 www.stackoverflow.com | tail -1| awk '{print $4}' | cut -d '/' -f 2 -> moyenne de 4 ping
