@@ -1,6 +1,6 @@
 import csv
 import numpy as np
-from typing import Dict, Protocol, Tuple
+from typing import Dict, Protocol, Tuple, List
 import matplotlib.pyplot as plt
 
 
@@ -68,12 +68,37 @@ def recupaffmetrique2(metrique2: str)-> Dict[str,np.ndarray]:
 
 
 def afftabmetrique3(portDict: Dict[str,np.ndarray]):
-    i : int =0
-    while i != len(portDict["temps"]):
-        plt.plot([portDict[i]["temps"]],[portDict[i]["port"]])
-        i+=1
-    plt.ylabel("numéro de port")
-    plt.xlabel("Temps")
+    a : List[int] = portDict["port"]
+    b : List[int] = portDict["temps"]
+    c : List[int] = [] 
+    d : List[int] = []
+    e : List[int] = []
+    f : List[int] = []
+    fig, axs = plt.subplots(2)
+    #les port utilisé a un instant t
+    axs[0].scatter(a ,b, marker = 'x')
+    #nombre de port ouvert en fonction du temps
+    for i in a:
+        t : int = b[0]
+        t1 : int
+        t2 : int
+        for y in b:
+            if y == t:
+                c.append(i)
+            else:
+                d.append(len(c))
+                c.clear()
+                t = y
+    for i in d:
+        if i not in e:
+            e.append(i)
+    for i in b:
+        if i not in f:
+            f.append(i)
+    print(e)
+    axs[1].bar(f, e, width=1, edgecolor="white", linewidth=0.7)
+    
+
     plt.show()
     
     
