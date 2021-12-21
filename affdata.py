@@ -74,9 +74,11 @@ def afftabmetrique3(portDict: Dict[str,np.ndarray]):
     d : List[int] = []
     e : List[int] = []
     f : List[int] = []
-    fig, axs = plt.subplots(2)
+    
+    fig, axs = plt.subplots(3)
     #les port utilisé a un instant t
-    axs[0].scatter(a ,b, marker = 'x')
+    axs[0].scatter(a ,b, marker = 'o')
+    axs[0].set_title('les ports utilisé en fonction du temps')
     #nombre de port ouvert en fonction du temps
     for i in a:
         t : int = b[0]
@@ -95,16 +97,21 @@ def afftabmetrique3(portDict: Dict[str,np.ndarray]):
     for i in b:
         if i not in f:
             f.append(i)
-    print(e)
-    axs[1].bar(f, e, width=1, edgecolor="white", linewidth=0.7)
     
-
+    axs[1].bar(f, e, width=1, edgecolor="white", linewidth=0.7)
+    axs[1].set_title('le nombre de port ouvert en fonction du temps')
+    #numéro de port associé a leur protocol
+    axs[2].scatter(a ,portDict["protocol"], marker = 'o' )
+    axs[2].set_title('les protocol associé a chaque port')
+    axs[2].set_ylabel('0=UDP, 1=TCP, 2=HTTP, 3=HTTPS, 4=NTP')
+    
+    plt.subplots_adjust(hspace=0.7)
     plt.show()
     
     
 
 if __name__ == "__main__":
     #recupaffmetrique1('connectivityData.csv')
-    print(recupaffmetrique2('portData.csv'))
+    recupaffmetrique2('portData.csv')
     afftabmetrique3(recupaffmetrique2('portData.csv'))
     
