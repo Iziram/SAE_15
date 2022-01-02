@@ -1,9 +1,0 @@
-{
-    "jupyter.jupyterServerType": "local",
-    "autodoxygen.memoire.memoire": [
-        {
-            "name": "data",
-            "description": "Dictionnaire contenant les informations sur chaque partition au format partition : [taille taille_utilisée timestamp]"
-        }
-    ]
-}
