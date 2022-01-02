@@ -1,6 +1,8 @@
 from csv import reader
-def converter(port:int) -> str or None:
-  return _getDico().get(port, None)  
+def converter(port:str) -> str or None:
+  if port == "*":
+    return "Tous les ports"
+  return _getDico().get(int(port), None)  
     
 
 def _getDico():
@@ -16,4 +18,4 @@ def _getDico():
 
 
 if __name__ == "__main__":
-    print(converter(8080))
+    print(converter("*"))
