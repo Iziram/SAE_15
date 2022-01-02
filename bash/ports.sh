@@ -14,7 +14,7 @@ do
     port_distant=`echo $socket_distant | cut -d ':' -f 2`
 
     protocol="d"
-    if (( port_local > 1024 ));
+    if (( port_local > 10000 ));
     then
        protocol=$port_distant
     else
