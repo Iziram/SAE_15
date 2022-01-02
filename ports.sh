@@ -17,7 +17,7 @@ do
 
     # on répète la même opération sans l'option -n pour obtenir le nom du service associé
     # on ajoute le timestamp à la fin
-    echo "$(netstat -nautA inet | tail -n +3 | sed -n "$i p" | tr -s ' ' | tr ' ' ',' | cut -d ',' -f 4 | tr ':' ','),$(netstat -autA inet | tail -n +3 | sed -n "$i p" | tr -s ' ' | tr ' ' ',' | cut -d ',' -f 4 | cut -d ':' -f 2),$date"
+    echo "$(netstat -nautA inet | tail -n +3 | sed -n "$i p" | tr -s ' ' | tr ' ' ',' | cut -d ',' -f 4 | tr ':' ','),$(netstat -nautA inet | tail -n +3 | sed -n "$i p" | tr -s ' ' | tr ' ' ',' | cut -d ',' -f 4 | cut -d ':' -f 2),$date"
 done;
 
 exit 0;
