@@ -66,12 +66,14 @@ def affmetrique1(connectdict: Dict[str,int]):
     
     #upstream en fonction du temps
     fig, axs = plt.subplots()
-    axs.scatter(connectdict["temps"], connectdict["upstream"],s='scale')
+    axs.scatter(connectdict["temps"], connectdict["upstream"])
     axs.set_title('upstream en fonction du temps')
-    axs.axes.set_xmargin(0.001)
-    axs.axes.set_ymargin(0.001)
+    axs.axes.set_xticks('90')
+    print(connectdict["temps"])
     
-    plt.xticks(rotation = '90')
+    
+
+   
     
     
     
