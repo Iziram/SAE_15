@@ -1,6 +1,7 @@
 import csv
+from matplotlib.colors import LinearSegmentedColormap
 import numpy as np
-from typing import Dict, Protocol, Tuple, List
+from typing import Dict, Optional, Protocol, Tuple, List
 import matplotlib.pyplot as plt
 from protocolConverter import converter
 
@@ -64,14 +65,25 @@ def recupaffmetrique2(path:str):
 def affmetrique1(connectdict: Dict[str,int]):
     
     #upstream en fonction du temps
-    plt.scatter(connectdict["temps"], connectdict["upstream"], linewidth=2.0)
-    plt.suptitle('upstream en fonction du temps')
+    fig, axs = plt.subplots()
+    axs.scatter(connectdict["temps"], connectdict["upstream"],s='scale')
+    axs.set_title('upstream en fonction du temps')
+    axs.axes.set_xmargin(0.001)
+    axs.axes.set_ymargin(0.001)
+    
+    plt.xticks(rotation = '90')
+    
+    
+    
+    
     plt.show()
+
 def affmetrique12(connectdict: Dict[str,int]):
     #downstream en fonction du temps
     plt.scatter(connectdict["temps"], connectdict["downstream"], linewidth=2.0)
     plt.suptitle('downstream en fonction du temps')
     plt.show()
+
 def affmetrique13(connectdict: Dict[str,int]):
     #ping en fonction du temps
     plt.scatter(connectdict["temps"], connectdict["ping"], linewidth=2.0)
@@ -90,7 +102,7 @@ if __name__ == "__main__":
     b = recupaffmetrique2('./python/portData.csv')
     #affmetrique31(b)
     affmetrique1(a)
-    affmetrique12(a)
-    affmetrique13(a)
+    #affmetrique12(a)
+    #affmetrique13(a)
     
     
