@@ -2,7 +2,7 @@ import csv
 import numpy as np
 from typing import Dict, Protocol, Tuple, List
 import matplotlib.pyplot as plt
-
+from protocolConverter import converter
 
 def recupaffmetrique1(metrique1: str)-> Dict[str,np.ndarray]:
     """
@@ -37,7 +37,7 @@ def recupaffmetrique1(metrique1: str)-> Dict[str,np.ndarray]:
 
 def recupaffmetrique2(metrique2: str)-> Dict[str,np.ndarray]:
     #variable utilisé pour la métrique 3
-    portDict: Dict[str,np.ndarray] = {"port": np.ndarray([]), "protocol":np.ndarray([]), "temps": np.ndarray([])}
+    portDict: Dict[str,np.ndarray] = {"port": np.ndarray([]), "protocol":str(), "temps": np.ndarray([])}
     port : int
     proto : int = -1
     protoc: str
@@ -49,16 +49,7 @@ def recupaffmetrique2(metrique2: str)-> Dict[str,np.ndarray]:
             port = row[0]
             protoc = row[1]
             tps2 = row[2]
-            if protoc == "UDP":
-                proto = 0
-            if protoc == "TCP":
-                proto = 1
-            if protoc == "HTTP":
-                proto = 2
-            if protoc == "HTTPS":
-                proto = 3
-            if protoc == "NTP":
-                proto = 4
+            converter(protoc)
             portDict["port"] = np.append(portDict["port"],port)
             portDict["protocol"] = np.append(portDict["protocol"],proto)
             portDict["temps"] = np.append(portDict["temps"],tps2)
@@ -66,18 +57,19 @@ def recupaffmetrique2(metrique2: str)-> Dict[str,np.ndarray]:
 
 
 def affmetrique1(connectdict: Dict[str,int]):
-    fig, ax = plt.subplots(3)
+    
     #upstream en fonction du temps
-    ax[0].plot(connectdict["temps"], connectdict["upstream"], linewidth=2.0)
-    ax[0].set_title('upstream en fonction du temps')
+    plt.plot(connectdict["temps"], connectdict["upstream"], linewidth=2.0)
+    plt.set_title('upstream en fonction du temps')
+    
+def affmetrique12(connectdict: Dict[str,int]):
     #downstream en fonction du temps
-    ax[1].plot(connectdict["temps"], connectdict["downstream"], linewidth=2.0)
-    ax[1].set_title('downstream en fonction du temps')
+    plt.plot(connectdict["temps"], connectdict["downstream"], linewidth=2.0)
+    plt.set_title('downstream en fonction du temps')
+def affmetrique13(connectdict: Dict[str,int]):
     #ping en fonction du temps
-    ax[2].plot(connectdict["temps"], connectdict["ping"], linewidth=2.0)
-    ax[2].set_title('ping en fonction du temps')
-
-    plt.subplots_adjust(hspace=0.7)
+    plt.plot(connectdict["temps"], connectdict["ping"], linewidth=2.0)
+    plt.set_title('ping en fonction du temps')
 
 def affmetrique31(portDict: Dict[str,np.ndarray]):
     #nombre de port ouvert en fonction du temps
@@ -112,9 +104,11 @@ def affmetrique31(portDict: Dict[str,np.ndarray]):
     
 
 if __name__ == "__main__":
-    recupaffmetrique1('connectivityData.csv')
-    recupaffmetrique2('portData.csv')
-    affmetrique31(recupaffmetrique2('portData.csv'))
-    affmetrique1(recupaffmetrique1('connectivityData.csv'))
+    a = recupaffmetrique1('./python/connectivityData.csv')
+    b = recupaffmetrique2('./python/portData.csv')
+    affmetrique31(b)
+    affmetrique1(a)
+    affmetrique12(a)
+    affmetrique13(a)
     plt.show()
     
