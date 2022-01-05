@@ -114,7 +114,7 @@ def affmetrique31(portDict: Dict[str,np.ndarray]):
 if __name__ == "__main__":
     recupaffmetrique1('connectivityData.csv')
     recupaffmetrique2('portData.csv')
-    afftabmetrique3(recupaffmetrique2('portData.csv'))
+    affmetrique31(recupaffmetrique2('portData.csv'))
     affmetrique1(recupaffmetrique1('connectivityData.csv'))
     plt.show()
     
