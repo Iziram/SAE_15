@@ -64,19 +64,29 @@ def recupaffmetrique2(metrique2: str)-> Dict[str,np.ndarray]:
             portDict["temps"] = np.append(portDict["temps"],tps2)
     return portDict
 
-def afftabmetrique3(portDict: Dict[str,np.ndarray]):
+
+def affmetrique1(connectdict: Dict[str,int]):
+    fig, ax = plt.subplots(3)
+    #upstream en fonction du temps
+    ax[0].plot(connectdict["temps"], connectdict["upstream"], linewidth=2.0)
+    ax[0].set_title('upstream en fonction du temps')
+    #downstream en fonction du temps
+    ax[1].plot(connectdict["temps"], connectdict["downstream"], linewidth=2.0)
+    ax[1].set_title('downstream en fonction du temps')
+    #ping en fonction du temps
+    ax[2].plot(connectdict["temps"], connectdict["ping"], linewidth=2.0)
+    ax[2].set_title('ping en fonction du temps')
+
+    plt.subplots_adjust(hspace=0.7)
+
+def affmetrique31(portDict: Dict[str,np.ndarray]):
+    #nombre de port ouvert en fonction du temps
     a : List[int] = portDict["port"]
     b : List[int] = portDict["temps"]
     c : List[int] = [] 
     d : List[int] = []
     e : List[int] = []
     f : List[int] = []
-    
-    fig, axs = plt.subplots(3)
-    #les port utilisé a un instant t
-    axs[0].scatter(a ,b, marker = 'o')
-    axs[0].set_title('les ports utilisé en fonction du temps')
-    #nombre de port ouvert en fonction du temps
     for i in a:
         t : int = b[0]
         t1 : int
@@ -95,29 +105,9 @@ def afftabmetrique3(portDict: Dict[str,np.ndarray]):
         if i not in f:
             f.append(i)
     
-    axs[1].bar(f, e, width=1, edgecolor="white", linewidth=0.7)
-    axs[1].set_title('le nombre de port ouvert en fonction du temps')
-    #numéro de port associé a leur protocol
-    axs[2].scatter(a ,portDict["protocol"], marker = 'o' )
-    axs[2].set_title('les protocol associé a chaque port')
-    axs[2].set_ylabel('0=UDP, 1=TCP, 2=HTTP, 3=HTTPS, 4=NTP')
-    
-    plt.subplots_adjust(hspace=0.7)
+    plt.bar(f, e, width=1, edgecolor="white", linewidth=0.7)
+    plt.set_title('le nombre de port ouvert en fonction du temps')
 
-def affmetrique1(connectdict: Dict[str,int]):
-    fig, ax = plt.subplots(3)
-    #upstream en fonction du temps
-    ax[0].plot(connectdict["temps"], connectdict["upstream"], linewidth=2.0)
-    ax[0].set_title('upstream en fonction du temps')
-    #downstream en fonction du temps
-    ax[1].plot(connectdict["temps"], connectdict["downstream"], linewidth=2.0)
-    ax[1].set_title('downstream en fonction du temps')
-    #ping en fonction du temps
-    ax[2].plot(connectdict["temps"], connectdict["ping"], linewidth=2.0)
-    ax[2].set_title('ping en fonction du temps')
-
-    plt.subplots_adjust(hspace=0.7)
-    
     
     
 
