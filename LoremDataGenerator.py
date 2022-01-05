@@ -19,12 +19,13 @@ def generatePortData(path:str ="./portData.csv"):
     """
     removeFileIfExists(path)
     time : int = 1638188438
-    protocol : list = ["UDP", "TCP","HTTP","HTTPS","NTP"]
+    protocol : list = [22,23,443,80,8080,68]
+    ip : list = ["1.2.3.4","10.1.1.1","0.0.0.0"]
     lines : list = []
     for i in range(5):
             port : list = [ randint(1, 100) for x in range(randint(1, 100))]
             for p in port :
-                lines.append(f'{p},{protocol[randint(0,4)]},{time}\n')
+                lines.append(f'{ip[randint(0, 2)]},{p},{protocol[randint(0,len(protocol)-1)]},{time}\n')
             time += 60
     with open(path,'w') as file :
         file.writelines(lines)
