@@ -35,80 +35,62 @@ def recupaffmetrique1(metrique1: str)-> Dict[str,np.ndarray]:
         
     return conectDict
 
-def recupaffmetrique2(metrique2: str)-> Dict[str,np.ndarray]:
-    #variable utilisé pour la métrique 3
-    portDict: Dict[str,np.ndarray] = {"port": np.ndarray([]), "protocol":str(), "temps": np.ndarray([])}
-    port : int
-    proto : int = -1
-    protoc: str
-    tps2: int
-    #parti du programme qui récupère le fichier csv de la métrique 3 pour ensuite le metre sous forme d'un dictionnaire
-    with open(metrique2, newline='') as csvfile:
+def recupaffmetrique2(path:str):
+    dico = {}
+    
+    with open(path, newline='') as csvfile:
         datareader = csv.reader(csvfile, delimiter=',', quotechar='|')
         for row in datareader:
-            port = row[0]
-            protoc = row[1]
-            tps2 = row[2]
-            converter(protoc)
-            portDict["port"] = np.append(portDict["port"],port)
-            portDict["protocol"] = np.append(portDict["protocol"],proto)
-            portDict["temps"] = np.append(portDict["temps"],tps2)
-    return portDict
+            interface : str = row[0]
+            temps : int = int(row[3])
+            
+            port_proto : dict = {
+                    row[1] : converter(row[2])
+                }
+            
+            if interface in dico:
+                if temps in dico[interface]:
+                    dico[interface][temps][row[1]] = converter(row[2])
+                else:
+                    dico[interface][temps] = port_proto
+            else:
+                dico[interface] = {
+                    temps:port_proto}
+                
+    return dico
+    
 
 
 def affmetrique1(connectdict: Dict[str,int]):
     
     #upstream en fonction du temps
-    plt.plot(connectdict["temps"], connectdict["upstream"], linewidth=2.0)
-    plt.set_title('upstream en fonction du temps')
-    
+    plt.scatter(connectdict["temps"], connectdict["upstream"], linewidth=2.0)
+    plt.suptitle('upstream en fonction du temps')
+    plt.show()
 def affmetrique12(connectdict: Dict[str,int]):
     #downstream en fonction du temps
-    plt.plot(connectdict["temps"], connectdict["downstream"], linewidth=2.0)
-    plt.set_title('downstream en fonction du temps')
+    plt.scatter(connectdict["temps"], connectdict["downstream"], linewidth=2.0)
+    plt.suptitle('downstream en fonction du temps')
+    plt.show()
 def affmetrique13(connectdict: Dict[str,int]):
     #ping en fonction du temps
-    plt.plot(connectdict["temps"], connectdict["ping"], linewidth=2.0)
-    plt.set_title('ping en fonction du temps')
+    plt.scatter(connectdict["temps"], connectdict["ping"], linewidth=2.0)
+    plt.suptitle('ping en fonction du temps')
+    plt.show()
 
-def affmetrique31(portDict: Dict[str,np.ndarray]):
-    #nombre de port ouvert en fonction du temps
-    a : List[int] = portDict["port"]
-    b : List[int] = portDict["temps"]
-    c : List[int] = [] 
-    d : List[int] = []
-    e : List[int] = []
-    f : List[int] = []
-    for i in a:
-        t : int = b[0]
-        t1 : int
-        t2 : int
-        for y in b:
-            if y == t:
-                c.append(i)
-            else:
-                d.append(len(c))
-                c.clear()
-                t = y
-    for i in d:
-        if i not in e:
-            e.append(i)
-    for i in b:
-        if i not in f:
-            f.append(i)
     
-    plt.bar(f, e, width=1, edgecolor="white", linewidth=0.7)
-    plt.set_title('le nombre de port ouvert en fonction du temps')
+    
 
+    
     
     
 
 if __name__ == "__main__":
     a = recupaffmetrique1('./python/connectivityData.csv')
     b = recupaffmetrique2('./python/portData.csv')
-    affmetrique31(b)
+    #affmetrique31(b)
     affmetrique1(a)
     affmetrique12(a)
     affmetrique13(a)
-    plt.show()
+    
     
