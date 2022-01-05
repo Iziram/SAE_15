@@ -8,7 +8,7 @@ def affmetrique31(portDict: Dict[str,np.ndarray], interface="toutes", temps_debu
     times = {}
     fig, axs = plt.subplots()
     if interface not in portDict:
-        fig.suptitle("Nombre de port ouverts par rapport au temps (toutes interfaces)")
+        fig.suptitle("Nombre de port ouverts par rapport au temps (toutes interfaces)", fontsize=24)
         if temps_debut == -1 or temps_fin == -1:
             for inter in portDict:
                 for temps in portDict[inter]:
@@ -17,7 +17,7 @@ def affmetrique31(portDict: Dict[str,np.ndarray], interface="toutes", temps_debu
                     else:
                         times[temps] = len(portDict[inter][temps])
     else:
-        fig.suptitle(f"Nombre de port ouverts par rapport au temps (Interface : {interface})")
+        fig.suptitle(f"Nombre de port ouverts par rapport au temps (Interface : {interface})", fontsize=24)
         for temps in portDict[interface]:
                     if temps in times :
                         times[temps] += len(portDict[interface][temps])
@@ -28,6 +28,39 @@ def affmetrique31(portDict: Dict[str,np.ndarray], interface="toutes", temps_debu
     axs.xaxis.set_major_formatter(dateFormatter)
     fig.autofmt_xdate()
     
+
+
+def affmetrique32(portDict, port, interface="toutes"):
+    fig, axs = plt.subplots()
+    inters : list = list(portDict.keys())
+    if interface not in portDict:
+        fig.suptitle(f"Affichage de l'état du port {port} pour chaque interface", fontsize=24)
+        tmps = []
+        interfaces = []
+        for inter in portDict:
+            for temps in portDict[inter]:
+                if port in portDict[inter][temps]:
+                    tmps.append(temps)
+                    interfaces.append(inters.index(inter))
+        axs.scatter(tmps, interfaces)
+    else:
+        fig.suptitle(f"Affichage de l'état du port {port} sur l'interface {interface}", fontsize=24)
+        inters = [interface]
+        times = {}
+        for temps in portDict[interface]:
+            if port in portDict[interface][temps]:
+                times[temps] = 0
+        axs.scatter(times.keys(), times.values())
+    
+    def interFormatter(id,_)->str:
+        if id in [float(i) for i in range(len(inters))]:
+            return inters[int(id)]
+        else:
+            return ""
+    
+    axs.xaxis.set_major_formatter(dateFormatter)
+    axs.yaxis.set_major_formatter(interFormatter)
+    fig.autofmt_xdate()
 
 
 def dateFormatter(epoch:int, _) -> str :
@@ -63,7 +96,8 @@ def transformationCsvDicoMetrique2(path:str):
 if __name__ == "__main__":
     # a = recupaffmetrique1('./python/connectivityData.csv')
     b = transformationCsvDicoMetrique2('./python/portData.csv')
-    affmetrique31(b, "1.2.3.4")
+    affmetrique32(b, "36847")
+    affmetrique31(b)
     # affmetrique1(a)
     # affmetrique12(a)
     # affmetrique13(a)
