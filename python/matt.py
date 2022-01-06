@@ -2,7 +2,6 @@ import csv
 import numpy as np
 from typing import Dict, Protocol, Tuple, List
 import matplotlib.pyplot as plt
-import matplotlib.dates as mdate
 from protocolConverter import converter
 def affmetrique31(portDict: Dict[str,np.ndarray], interface="toutes", temps_debut:int=-1, temps_fin:int = -1):
     times = {}
@@ -26,7 +25,6 @@ def affmetrique31(portDict: Dict[str,np.ndarray], interface="toutes", temps_debu
     
     axs.bar(times.keys(),times.values(), width=4)
     axs.xaxis.set_major_formatter(dateFormatter)
-    fig.autofmt_xdate()
     
 
 
@@ -96,7 +94,7 @@ def transformationCsvDicoMetrique2(path:str):
 if __name__ == "__main__":
     # a = recupaffmetrique1('./python/connectivityData.csv')
     b = transformationCsvDicoMetrique2('./python/portData.csv')
-    affmetrique32(b, "36847")
+    # affmetrique32(b, "36847")
     affmetrique31(b)
     # affmetrique1(a)
     # affmetrique12(a)
