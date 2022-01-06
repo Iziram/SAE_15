@@ -63,34 +63,63 @@ def recupaffmetrique2(path:str):
 
 
 def affmetrique1(connectdict: Dict[str,int]):
-    
     #upstream en fonction du temps
+   
+    y : List[float] = [connectdict["upstream"][0],connectdict["upstream"][25],connectdict["upstream"][50],connectdict["upstream"][75],connectdict["upstream"][100]]
+    x : List[float] = [connectdict["temps"][0],connectdict["temps"][25],connectdict["temps"][50],connectdict["temps"][75],connectdict["temps"][100]]
+
+    for i in range(len(connectdict["upstream"])):
+        
+        if connectdict["upstream"][i] < connectdict["upstream"][i-5]:
+            x.append(connectdict["temps"][i])
+            y.append(connectdict["upstream"][i])
+
     fig, axs = plt.subplots()
     axs.scatter(connectdict["temps"], connectdict["upstream"])
     axs.set_title('upstream en fonction du temps')
-    axs.axes.set_xticks('90')
-    print(connectdict["temps"])
-    
-    
-
-   
+    axs.axes.set_xticks(x)
+    axs.axes.set_yticks(y)
     
     
     
-    
-    plt.show()
 
 def affmetrique12(connectdict: Dict[str,int]):
     #downstream en fonction du temps
-    plt.scatter(connectdict["temps"], connectdict["downstream"], linewidth=2.0)
-    plt.suptitle('downstream en fonction du temps')
-    plt.show()
+    y : List[float] = [connectdict["downstream"][0],connectdict["downstream"][25],connectdict["downstream"][50],connectdict["downstream"][75],connectdict["downstream"][100]]
+    x : List[float] = [connectdict["temps"][0],connectdict["temps"][25],connectdict["temps"][50],connectdict["temps"][75],connectdict["temps"][100]]
+
+    for i in range(len(connectdict["downstream"])):
+        
+        if connectdict["downstream"][i] < connectdict["downstream"][i-5]:
+            x.append(connectdict["temps"][i])
+            y.append(connectdict["downstream"][i])
+
+    fig, axs = plt.subplots()
+    axs.scatter(connectdict["temps"], connectdict["downstream"])
+    axs.set_title('downstream en fonction du temps')
+    axs.axes.set_xticks(x)
+    axs.axes.set_yticks(y)
+    
 
 def affmetrique13(connectdict: Dict[str,int]):
     #ping en fonction du temps
-    plt.scatter(connectdict["temps"], connectdict["ping"], linewidth=2.0)
-    plt.suptitle('ping en fonction du temps')
-    plt.show()
+    y : List[float] = [connectdict["ping"][0],connectdict["ping"][25],connectdict["ping"][50],connectdict["ping"][75],connectdict["ping"][100]]
+    x : List[float] = [connectdict["temps"][0],connectdict["temps"][25],connectdict["temps"][50],connectdict["temps"][75],connectdict["temps"][100]]
+
+    for i in range(len(connectdict["ping"])):
+        
+        if connectdict["ping"][i] == 0:
+            x.append(connectdict["temps"][i])
+        if connectdict["ping"][i-1] == 0 and connectdict["ping"][i+1] == 0:
+            x.remove(connectdict["temps"][i])
+
+            
+
+    fig, axs = plt.subplots()
+    axs.scatter(connectdict["temps"], connectdict["ping"])
+    axs.set_title('ping en fonction du temps')
+    axs.axes.set_xticks(x)
+    axs.axes.set_yticks(y)
 
     
     
@@ -102,9 +131,11 @@ def affmetrique13(connectdict: Dict[str,int]):
 if __name__ == "__main__":
     a = recupaffmetrique1('./python/connectivityData.csv')
     b = recupaffmetrique2('./python/portData.csv')
-    #affmetrique31(b)
-    affmetrique1(a)
+    
+    #affmetrique1(a)
     #affmetrique12(a)
-    #affmetrique13(a)
+    affmetrique13(a)
+    plt.show()
+    
     
     
