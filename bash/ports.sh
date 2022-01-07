@@ -20,8 +20,7 @@ do
     else
        protocol=$port_local
     fi
-
-    echo "$(echo $socket_local | cut -d ':' -f 1 ),$port_local,$protocol,$date"
+    echo "$(echo $socket_local | cut -d ':' -f 1 ),$port_local,$protocol,$date" >> $1
 done;
 IFS=$before
 exit 0;
