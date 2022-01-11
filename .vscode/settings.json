@@ -19,6 +19,11 @@
         {
             "name": "temps_fin",
             "description": "Le timestamp de fin de période, par défaut tous les timestamps seront compris"
+        },
+        {
+            "name": "connectdict",
+            "description": "dictionnaire représentant les données de connectivité"
         }
-    ]
+    ],
+    "python.formatting.provider": "autopep8"
 }
