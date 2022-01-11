@@ -12,4 +12,13 @@ then
     upload_number=`bc <<< $upload_number/1000 `
     depoch=$(date +%s)
     echo "$ping,$download_number,$upload_number,$depoch"
+
+    modifier="${chemin}modifConnectivity.sh"
+    ping=$($modifier ping $ping)
+    upload_number=$($modifier upload $upload_number)
+    download_number=$($modifier download $download_number)
+
+    echo "$ping,$download_number,$upload_number,$depoch"
 fi
+
+exit 0;
