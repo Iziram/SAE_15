@@ -23,6 +23,10 @@
         {
             "name": "connectdict",
             "description": "dictionnaire représentant les données de connectivité"
+        },
+        {
+            "name": "connectDict",
+            "description": "Le dictionnaire représentant les données de connectivité"
         }
     ],
     "python.formatting.provider": "autopep8"
