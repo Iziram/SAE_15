@@ -19,5 +19,5 @@ then
     else
         echo $2
     fi
-
+fi
 exit 0;
