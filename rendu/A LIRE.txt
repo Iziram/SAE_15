@@ -1,0 +1,9 @@
+Afin d'avoir le meilleur fonctionnement possible, il est important d'avoir la configuration suivante:
+
+- Python 3.9 ou supérieur
+- Les modules suivants installés 
+	- ipywidgets
+	- IPython.display
+	- Matplotlib
+
+Merci
